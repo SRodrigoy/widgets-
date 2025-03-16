@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000; min-height: 14.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;script&gt;</span></p>
+<p class="p1"><span class="s1">class MoonPhaseWidget extends HTMLElement {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>constructor() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>super();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>this.attachShadow({ mode: 'open' });</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>connectedCallback() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>this.shadowRoot.innerHTML = `</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;style&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>.moon-container {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>text-align: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>padding: 20px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>font-family: Arial, sans-serif;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>#moon-phase {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>margin-top: 20px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>font-size: 18px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/style&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="moon-container"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;canvas id="moon-canvas" width="200" height="200"&gt;&lt;/canvas&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div id="moon-phase"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>`;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>this.canvas = this.shadowRoot.querySelector('#moon-canvas');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>this.phaseDiv = this.shadowRoot.querySelector('#moon-phase');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>this.updateMoonPhase();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>drawMoonPhase(phase) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const ctx = this.canvas.getContext('2d');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const radius = this.canvas.width / 2 - 10;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const centerX = this.canvas.width / 2;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const centerY = this.canvas.height / 2;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Draw full moon</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>ctx.beginPath();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>ctx.fillStyle = '#FFE5B4';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>ctx.fill();</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Draw shadow</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const shadowWidth = radius * 2 * phase;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const shadowX = centerX - radius + shadowWidth;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>ctx.beginPath();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>ctx.fillStyle = '#1C1C1C';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>ctx.globalCompositeOperation = 'destination-in';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>ctx.fillRect(shadowX, centerY - radius, radius * 2 - shadowWidth, radius * 2);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>ctx.globalCompositeOperation = 'source-over';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>async updateMoonPhase() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>try {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const phase = await this.getMoonPhase();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>this.drawMoonPhase(phase);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const phaseText = phase &lt; 0.5 ? "Waxing" : "Waning";</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>this.phaseDiv.textContent = `${phaseText} - Illumination: ${(phase * 100).toFixed(1)}%`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>} catch (error) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>console.error('Error updating moon phase:', error);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>this.phaseDiv.textContent = 'Unable to load moon phase';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>async getMoonPhase() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const date = new Date();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const synmonth = 29.53058867; // Synodic month length in days</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const refDate = new Date(2000, 0, 6, 18, 14); // Known new moon</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const phase = ((date - refDate) / (1000 * 60 * 60 * 24)) % synmonth;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>return (phase / synmonth);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">customElements.define('moon-phase-widget', MoonPhaseWidget);</span></p>
+<p class="p1"><span class="s1">&lt;/script&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;!-- Usage --&gt;</span></p>
+<p class="p1"><span class="s1">&lt;moon-phase-widget&gt;&lt;/moon-phase-widget&gt;</span></p>
+</body>
+</html>
